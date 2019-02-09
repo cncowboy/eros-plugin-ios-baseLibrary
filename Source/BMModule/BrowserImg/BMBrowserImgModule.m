@@ -114,7 +114,7 @@ WX_EXPORT_METHOD(@selector(close))
     
     [imageView sd_setImageWithURL:[NSURL URLWithString:url]
                  placeholderImage:placeholder
-                          options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                          options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * targetURL) {
                               if (progressHandler)
                               {
                                   progressHandler(receivedSize,expectedSize);

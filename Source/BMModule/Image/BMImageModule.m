@@ -199,7 +199,7 @@ WX_EXPORT_METHOD(@selector(scanImage::))
     [imageView sd_setImageWithURL:[NSURL URLWithString:url]
                  placeholderImage:nil
                           options:SDWebImageRetryFailed | SDWebImageAllowInvalidSSLCertificates
-                         progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                         progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * targetURL) {
                              if (progressHandler)
                              {
                                  progressHandler(receivedSize,expectedSize);

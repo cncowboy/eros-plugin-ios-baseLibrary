@@ -71,7 +71,8 @@
             UIImage *img = nil;
             NSString *imgPath = [NSString stringWithFormat:@"%@/%@%@",K_JS_PAGES_PATH,imgUrl.host,imgUrl.path];
             NSData *imgData = [NSData dataWithContentsOfFile:imgPath];
-            if ([[NSData sd_contentTypeForImageData:imgData] isEqualToString:@"image/gif"]) {
+            SDImageFormat imageFormat = [NSData sd_imageFormatForImageData:imgData];
+            if (imageFormat == SDImageFormatGIF) {
                 img = [UIImage sd_animatedGIFWithData:imgData];
             } else {
                 img = [UIImage imageWithContentsOfFile:imgPath];
@@ -113,11 +114,11 @@
         return nil;
     }
     
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:url]
+    [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:url]
                                                     options:SDWebImageRetryFailed | SDWebImageAllowInvalidSSLCertificates
-                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * targetURL) {
                                                        
-                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                   } completed:^(UIImage *image, NSData * data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                                                        if (completedBlock) {
                                                            completedBlock(image,error,finished);
                                                        }
