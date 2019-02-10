@@ -9,7 +9,7 @@
 #import "BMConfigManager.h"
 #import "YTKNetwork.h"
 #import "BMDefine.h"
-#import <SVProgressHUD.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImage/SDWebImageDownloader.h>
 #import <CryptLib.h>
