@@ -25,6 +25,8 @@ Pod::Spec.new do |s|
   s.dependency 'SDWebImage', '4.0.0'
   s.dependency 'MJRefresh', '3.1.12'
   s.dependency 'CTMediator', '13'
+  s.dependency 'SVProgressHUD', '2.1.2'
+  s.dependency 'IAPHelper', '1.1'
 
   #Device信息非ARC
   s.subspec 'BMDevice' do |ss|
@@ -81,7 +83,6 @@ Pod::Spec.new do |s|
   s.subspec 'BMModule' do |ss|
     ss.source_files  = "Source/BMModule/**/*.{c,h,m,mm,S}"
     ss.public_header_files = "Source/BMModule/**/*.h"
-    ss.resources = 'Source/BMModule/Modal/SVProgressHUD/SVProgressHUD.bundle'
     ss.requires_arc  = true
     ss.dependency "Realm",'3.1.0'
     ss.dependency "BindingX",'1.0.3'
