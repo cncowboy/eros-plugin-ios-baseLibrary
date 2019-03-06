@@ -198,7 +198,7 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
         
         button.frame = CGRectMake(0, 0, size.width + 5, size.height);
         button.titleLabel.font = textFont;
-//        button.titleLabel.adjustsFontSizeToFitWidth = YES;
+        //        button.titleLabel.adjustsFontSizeToFitWidth = YES;
         button.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [button setTitleColor:textColor forState:UIControlStateNormal];
         [button setTitleColor:textColor  forState:UIControlStateHighlighted];
@@ -211,7 +211,7 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
         NSString *icon = param[@"image"];
         
         if (icon) {
-//            button.frame = CGRectMake(0, 0, 50, 15);
+            //            button.frame = CGRectMake(0, 0, 50, 15);
             [[self imageLoader] downloadImageWithURL:icon imageFrame:CGRectMake(0, 0, 15, 15) userInfo:nil completed:^(UIImage *image, NSError *error, BOOL finished) {
                 
                 CGFloat scale = [UIScreen mainScreen].scale;
@@ -223,12 +223,17 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
                     rect.size = CGSizeMake(image.width / 1.5, image.height / 1.5 );
                 }
                 
-                button.frame = rect;
-                
-                [button setBackgroundImage:image forState:UIControlStateNormal];
-                [button setBackgroundImage:image forState:UIControlStateHighlighted];
-//                [button setImage:image forState:UIControlStateNormal];
-//                [button setImage:image forState:UIControlStateHighlighted];
+                //                button.frame = rect;
+                CGSize imageSize = rect.size;
+                CGSize buttonSize = CGSizeMake(40.0f, 40.0f);
+                CGFloat heightBlank = (buttonSize.height - imageSize.height);
+                button.frame = CGRectMake(rect.origin.x - 5.0f, rect.origin.y - 0.5 * heightBlank, buttonSize.width, buttonSize.height);
+                [button setImageEdgeInsets:UIEdgeInsetsMake(0.5 * heightBlank, 5.0f, 0.5 * heightBlank, buttonSize.width - imageSize.width - 5.0f)];
+                //                [button setBackgroundImage:image forState:UIControlStateNormal];
+                //                [button setBackgroundImage:image forState:UIControlStateHighlighted];
+                //设置图片而不是背景图使得ImageEdgeInsets设置生效
+                [button setImage:image forState:UIControlStateNormal];
+                [button setImage:image forState:UIControlStateHighlighted];
                 
                 [self setNavItemWithView:button itemPosition:itemPosition];
                 
@@ -287,7 +292,7 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
         
         NSString *icon = param[@"image"];
         if (icon) {
-           
+            
             [[self imageLoader] downloadImageWithURL:icon imageFrame:CGRectMake(0, 0, 15, 15) userInfo:nil completed:^(UIImage *image, NSError *error, BOOL finished) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -299,13 +304,18 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
                     if (scale == 2 && K_SYSTEM_VERSION >= 11.0) {
                         rect.size = CGSizeMake(image.width / 1.5, image.height / 1.5 );
                     }
-            
-                    button.frame = rect;
                     
-                    [button setBackgroundImage:image forState:UIControlStateNormal];
-                    [button setBackgroundImage:image forState:UIControlStateHighlighted];
-//                    [button setImage:image forState:UIControlStateNormal];
-//                    [button setImage:image forState:UIControlStateHighlighted];
+                    //                button.frame = rect;
+                    CGSize imageSize = rect.size;
+                    CGSize buttonSize = CGSizeMake(40.0f, 40.0f);
+                    CGFloat heightBlank = (buttonSize.height - imageSize.height);
+                    button.frame = CGRectMake(rect.origin.x - 5.0f, rect.origin.y - 0.5 * heightBlank, buttonSize.width, buttonSize.height);
+                    [button setImageEdgeInsets:UIEdgeInsetsMake(0.5 * heightBlank, 5.0f, 0.5 * heightBlank, buttonSize.width - imageSize.width - 5.0f)];
+                    //                [button setBackgroundImage:image forState:UIControlStateNormal];
+                    //                [button setBackgroundImage:image forState:UIControlStateHighlighted];
+                    //设置图片而不是背景图使得ImageEdgeInsets设置生效
+                    [button setImage:image forState:UIControlStateNormal];
+                    [button setImage:image forState:UIControlStateHighlighted];
                     [self setNavItemWithView:button itemPosition:itemPosition];
                 });
             }];
@@ -327,6 +337,10 @@ WX_EXPORT_METHOD(@selector(statusBarHidden:))
 {
     if (self.leftItemCallback) {
         self.leftItemCallback(nil,YES);
+    }
+    else {
+        UIViewController *vc = self.weexInstance.viewController;
+        [vc.navigationController popViewControllerAnimated:YES];
     }
 }
 
