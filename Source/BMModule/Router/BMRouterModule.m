@@ -33,6 +33,7 @@ WX_EXPORT_METHOD(@selector(callPhone:))
 WX_EXPORT_METHOD(@selector(openBrowser:))
 WX_EXPORT_METHOD(@selector(setHomePage:))
 WX_EXPORT_METHOD(@selector(clearHomePage))
+WX_EXPORT_METHOD(@selector(finish))
 
 - (void)open:(NSDictionary *)info callback:(WXModuleCallback)callback
 {
@@ -68,6 +69,12 @@ WX_EXPORT_METHOD(@selector(clearHomePage))
     if ([weexInstance.viewController respondsToSelector:@selector(refreshWeex)]) {
         [(BMBaseViewController *)weexInstance.viewController refreshWeex];
     }
+}
+
+- (void)finish
+{
+    UIViewController *vc = (BMBaseViewController *)weexInstance.viewController;
+    [vc.navigationController popViewControllerAnimated:YES];
 }
 
 /** 打开app内置webview */
